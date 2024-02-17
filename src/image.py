@@ -1,3 +1,3 @@
 
-def image_to_text():
+def image_to_text(url):
     pass
