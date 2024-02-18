@@ -1,0 +1,15 @@
+{% extends "layouts.html" %}
+    {% block content %}
+
+<h1>Your Dining Hall: {% id %}</h1>
+
+{% for hall in halls %}
+    <h2>{% hall.name %}</h2>
+    <ul>
+        <li>{% hall.id %}</li>
+        
+    </ul>
+{% endfor %}
+
+
+{% endblock %}
