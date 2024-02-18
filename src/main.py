@@ -51,7 +51,6 @@ def hall_info(id):
 def new_review():
     if 'user_id' not in session:
         return redirect(url_for('halls_page'))
-    
     food_id = request.form['food_id']
     rating = int(request.form['rating'])
     if user_can_rate_food(session['user_id'], food_id):

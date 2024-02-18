@@ -23,11 +23,10 @@ def get_dining_hall(dining_id):
 
 def get_food_from_id(food_id):
     for hall in dining_halls:
-        
-        for stations in hall:
-            for foods in stations:
-                if foods.id == food_id:
-                    return foods
+        for stations in hall.stations:
+            for f in stations.food:
+                if f.id == food_id:
+                    return f
 
 def get_user_from_name(username):
     for user in user_list:
@@ -64,6 +63,6 @@ def add_rating(user_id, food_id, rating):
     user.add_rating(new_rating)
     food = get_food_from_id(food_id)
     food.add_rating(new_rating)
-    store_dining_halls()
-    store_users()
+    store_dining_halls(dining_halls)
+    store_users(user_list)
 

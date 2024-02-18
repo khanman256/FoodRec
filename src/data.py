@@ -17,7 +17,8 @@ class DiningHall():
         self.stations.append(station)
 
     def json(self):
-        obj = self.__dict__
+        print(type(self.stations[0]))
+        obj = self.__dict__.copy()
         obj["stations"] = [s.json() for s in self.stations]
         return obj
 
@@ -31,7 +32,7 @@ class Station():
         self.food.append(foodItem)
         
     def json(self):
-        obj = self.__dict__
+        obj = self.__dict__.copy()
         obj["food"] = [s.json() for s in self.food]
         return obj
 
@@ -52,7 +53,7 @@ class Food():
         return 0
 
     def json(self):
-        obj = self.__dict__
+        obj = self.__dict__.copy()
         obj["ratings"] = [r.json() for r in self.ratings]
         return obj
 
@@ -70,7 +71,7 @@ class User():
         self.ratings.append(rating)
 
     def json(self):
-        obj = self.__dict__
+        obj = self.__dict__.copy()
         obj["ratings"] = [r.json() for r in self.ratings]
         return obj
     
@@ -95,6 +96,7 @@ class Rating():
 
 ## UTILITY FUNCTIONS
 
+# weird issue where stations list is getting converted into dicts
 def store_dining_halls(dining_halls):
     objs = []
     for hall in dining_halls:

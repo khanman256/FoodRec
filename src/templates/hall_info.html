@@ -16,13 +16,15 @@
     
     <div id="dropdown" class="flex flex-col">
       {% for food in station.food %}  
-      <div class="px-10 py-4 text-xl font-semi border-2 my-2 flex flex-row rounded-full justify-between">
+      <div class="px-10 py-4 text-xl font-semi border-2 my-2 flex flex-row rounded-full justify-between" data-modal-toggle="{{food.id}}">
         <h1 class="mx-1 inline-block align-text-bottom"> {{food.name}} ({{'${:,.2f}'.format(food.price)}}) </h1>
         {% with rating=food.average_rating() %}
         {% include "includes/stars.html" %}
         {% endwith %}
         
       </div>
+      {% include "includes/modal.html" %}
+
       {% endfor %}
     </div>
 
