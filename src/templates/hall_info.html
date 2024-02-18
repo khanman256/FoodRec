@@ -1,5 +1,35 @@
 {% extends "layouts.html" %}
-    {% block content %}
+{% block content %}
+<br>
 
-<h1>Choose a Dining Hall</h1>
+<h1 class="py-10 text-6xl text-center"><b>{{hall.name}}</b></h1>
+
+
+
+{% for station in hall.stations %}
+
+<div class="flex justify-center items-center py-8 rounded-lg">
+  <div class="flex bg-white p-10 cursor-pointer shadow-xl rounded-lg w-1/2 flex-col rounded-xl">
+    <h2 class="font-bold text-4xl my-4 font-semibold mt-4">{{station.name}}</h2>
+
+   
+    
+    <div id="dropdown" class="flex flex-col">
+      {% for food in station.food %}  
+      <div class="px-10 py-4 text-xl font-semi border-2 my-2 flex flex-row rounded-full justify-between">
+        <h1 class="mx-1 inline-block align-text-bottom"> {{food.name}} ({{'${:,.2f}'.format(food.price)}}) </h1>
+        {% with rating=food.average_rating() %}
+        {% include "includes/stars.html" %}
+        {% endwith %}
+        
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+</div>
+  
+  {% endfor %}
+
 {% endblock %}

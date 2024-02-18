@@ -1,65 +1,69 @@
-"""
-This file will connect the flask application with the the other util files we made.
-"""
+from numpy import true_divide
 from data import *
-from collect import *
+
 # list of dining halls will be stored here
-dining_halls = []
+dining_halls = load_dining_halls()
+user_list = load_users()
 
-# code for testing
-c4 = DiningHall("Chenango Champlain Collegiate Center", 1)
-
-simple_servings = Station("Simple Servings")
-for name, price in [("Steak", 4.50), ("Beans", 3.67), ("Chicken", 3.44)]:
-    food = Food(name, price)
-    simple_servings.add_food(food)
-
-
-
-# code that fills dining halls should be here...
-# for image in get_images():
-#     data = image_to_text(image)
-    # convert the data you get into a class 
+### UTIL FUNCTIONS
 
 # returns list of ids of all halls in dining_halls
 def dining_hall_ids():
     dining_hall_id_list = []
     for hall in dining_halls:
+        print(type(hall))
         dining_hall_id_list.append(hall.id)
     return dining_hall_id_list
 
 def get_dining_hall(dining_id):
-    return DiningHall(name, dining_id)
-    
-    
-
-    
-# returns the list of ids of all stations in the specified dining hall
-def get_station_ids(dining_hall_id):
-    station_id_list = []
     for hall in dining_halls:
-        if hall.id == dining_hall_id:
-            for station in hall:
-                station_id_list.append(station.id)
-        return station_id_list
-    
-    print("ERROR")
-    return
+        if hall.id == dining_id:
+            return hall
+    raise Exception("Dining Hall Doesnt Exist")
+
+def get_food_from_id(food_id):
+    for hall in dining_halls:
         
+        for stations in hall:
+            for foods in stations:
+                if foods.id == food_id:
+                    return foods
 
+def get_user_from_name(username):
+    for user in user_list:
+        if user.name == username:
+            return user
 
-# returns all food ids 
-def get_food_ids(dining_hall_id, station_id):
-    food_id_list = []
-    for hall in dining_halls:
-        if hall.id == dining_hall_id:
-            for station in hall:
-                if station.id==station_id:
-                    for food in hall:
-                        food_id_list.append(food.id)
-                return food_id_list
-            
+def get_user_from_id(id):
+    for user in user_list:
+        if user.id == id:
+            return user
+        
+# make sure the new user is valid before adding
+def add_user(new_user):
+    user_list.append(new_user)
+    store_users(user_list)
 
+def does_user_exist(username):
+    username = username.lower()
+    for user in user_list:
+        if user.name == username:
+            return True
+    return False
 
-if __name__ == "__main__":
-    pass
+def user_can_rate_food(user_id, food_id):
+    user = get_user_from_id(user_id)
+    for rating in user.ratings:
+        if rating.food_id == food_id:
+            return False
+    return True
+
+def add_rating(user_id, food_id, rating):
+    new_rating = Rating(rating, user_id, food_id)
+    user = get_user_from_id(user_id)
+    user.add_rating(new_rating)
+    food = get_food_from_id(food_id)
+    food.add_rating(new_rating)
+    store_dining_halls()
+    store_users()
+
