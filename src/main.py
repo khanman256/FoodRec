@@ -56,6 +56,7 @@ def new_review():
     if user_can_rate_food(session['user_id'], food_id):
         add_rating(session['user_id'], food_id, rating)
         return redirect(url_for('halls_page'))
+    return redirect(url_for('halls_page'))
 
 
 ### AUTH PAGES    
